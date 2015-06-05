@@ -27,7 +27,7 @@ public class Main extends Canvas implements ChangeListener{
     private Keyboard key;
     private Color[] palette;
 
-    private int pixScale;
+    private int pixScale = 0;
     private boolean gray;
 
     private int minScale = 0;
@@ -39,6 +39,9 @@ public class Main extends Canvas implements ChangeListener{
 
     private JButton saveButton;
     private Button save;
+
+    private JButton loadButton;
+    private Button load;
 
     public static void main(String[] args) {
        new Main();
@@ -72,7 +75,9 @@ public class Main extends Canvas implements ChangeListener{
             if (key.keys[KeyEvent.VK_S] || save.down){
                 SaveImage();
             }
-
+            if (key.keys[KeyEvent.VK_L] || load.down){
+                LoadNewImage();
+            }
         }
     }
 
@@ -85,7 +90,7 @@ public class Main extends Canvas implements ChangeListener{
         key = new Keyboard();
         addKeyListener(this.key);
 
-        pixelScaler = new JSlider(JSlider.HORIZONTAL, minScale, maxScale, minScale);
+        pixelScaler = new JSlider(JSlider.HORIZONTAL, minScale, maxScale, pixScale);
         pixelScaler.setMajorTickSpacing(2);
         pixelScaler.setPaintTicks(true);
         pixelScaler.setPaintLabels(true);
@@ -98,12 +103,15 @@ public class Main extends Canvas implements ChangeListener{
         saveButton = new JButton("Save Image");
         saveButton.addChangeListener(save = new Button());
 
+        loadButton = new JButton("Load Image");
+        loadButton.addChangeListener(load = new Button());
 
         frame.setLayout(new BorderLayout());
         JPanel pan = new JPanel(new BorderLayout());
         pan.add(pixelScaler, BorderLayout.NORTH);
         pan.add(grayButton, BorderLayout.WEST);
-        pan.add(saveButton, BorderLayout.EAST);
+        pan.add(loadButton, BorderLayout.EAST);
+        pan.add(saveButton, BorderLayout.CENTER);
         frame.add(pan, BorderLayout.NORTH);
         frame.add(this, BorderLayout.SOUTH);
         frame.pack();
@@ -111,12 +119,17 @@ public class Main extends Canvas implements ChangeListener{
         frame.setResizable(false);
         frame.setVisible(true);
 
-        createBufferStrategy(2);
+        if(getBufferStrategy() == null){
+            createBufferStrategy(2);
+        }
     }
 
     private void RenderImages()
     {
         bs = getBufferStrategy();
+        if(bs == null){
+            createBufferStrategy(2);
+        }
         Graphics g = bs.getDrawGraphics();
 
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -134,7 +147,6 @@ public class Main extends Canvas implements ChangeListener{
             scale = 1;
         }
 
-        System.out.println(before.getWidth() % scale + " " + before.getHeight() % scale);
         if(before.getWidth() % scale != 0 || before.getWidth() % scale != 0){
             before = ScaleImage(scale);
         }
@@ -227,6 +239,32 @@ public class Main extends Canvas implements ChangeListener{
         }
         this.width = (this.before.getWidth() * 2);
         this.height = this.before.getHeight();
+    }
+
+    private void LoadNewImage(){
+        boolean fileChosen = false;
+        while (!fileChosen) {
+            if (fileChoose.showOpenDialog(this) == 0)
+            {
+                File selectedFile = fileChoose.getSelectedFile();
+                try
+                {
+                    before = ImageIO.read(selectedFile);
+                    fileChosen = true;
+                }
+                catch (IOException e)
+                {
+                    fileChosen = false;
+                }
+            }
+        }
+        this.width = (this.before.getWidth() * 2);
+        this.height = this.before.getHeight();
+
+        frame.setVisible(false);
+        frame = new JFrame("GameBoy Palette Swapper");
+        InitFrame();
+        ConvertImageScalePixel(pixScale, gray);
     }
 
     private void SaveImage(){
