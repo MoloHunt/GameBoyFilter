@@ -16,6 +16,10 @@ Converts an image to the 5 colour original GameBoy colour palette
 
 - Pressing the *"Save Image"* button will now bring up the save dialog, but you can still press 'S' if you prefer
 
+- There is a new *"Load Image"* button that has moved the save image button over, pressing it will prompt you for a new image and resize the window it's all kinds of magic. Note: you can also press 'L' if you want to
+
+![alt tag](https://raw.githubusercontent.com/MoloHunt/GameBoyFilter/master/Images/Program%20Screenshot%20Load%20Image%20Button.png)
+
 - There is also now a check box for *"Gray Scale"* which lets you generate the image in gray scale, but keeping the five distinct colours, just in gray
 
 ![alt tag](https://raw.githubusercontent.com/MoloHunt/GameBoyFilter/master/Images/Program%20Screenshot%20GrayScale.png)
