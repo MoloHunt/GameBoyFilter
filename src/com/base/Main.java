@@ -1,5 +1,7 @@
 package com.base;
 
+import com.sun.codemodel.internal.JOp;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Container;
@@ -43,7 +45,16 @@ public class Main
         this.palette[4] = new Color(15, 56, 15);
 
         LoadImage();
-        ConvertImage();
+
+        if(before.getWidth() % 2 == 0 && before.getHeight() % 2 == 0){
+            int reply = JOptionPane.showConfirmDialog(null, "Render Full Size", "Render Option", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION){
+                ConvertImage();
+            }else{
+                ConvertImageHalfPixel();
+            }
+        }
+
         InitFrame();
         for (;;)
         {
@@ -89,32 +100,73 @@ public class Main
 
     private void ConvertImage()
     {
-        this.after = new BufferedImage(this.before.getWidth(), this.before.getHeight(), this.before.getType());
+        after = new BufferedImage(before.getWidth(), before.getHeight(), before.getType());
         int[] avgLookUpTable = new int[766];
         for (int i = 0; i < 766; i++) {
             avgLookUpTable[i] = (i / 3);
         }
-        for (int x = 0; x < this.before.getWidth(); x++) {
-            for (int y = 0; y < this.before.getHeight(); y++)
+        for (int x = 0; x < before.getWidth(); x++) {
+            for (int y = 0; y < before.getHeight(); y++)
             {
-                int red = new Color(this.before.getRGB(x, y)).getRed();
-                int green = new Color(this.before.getRGB(x, y)).getGreen();
-                int blue = new Color(this.before.getRGB(x, y)).getBlue();
+                int red = new Color(before.getRGB(x, y)).getRed();
+                int green = new Color(before.getRGB(x, y)).getGreen();
+                int blue = new Color(before.getRGB(x, y)).getBlue();
 
                 int newPixel = red + green + blue;
                 newPixel = avgLookUpTable[newPixel];
                 if ((newPixel >= 0) && (newPixel < 51)) {
-                    newPixel = this.palette[4].getRGB();
+                    newPixel = palette[4].getRGB();
                 } else if ((newPixel >= 51) && (newPixel < 102)) {
-                    newPixel = this.palette[3].getRGB();
+                    newPixel = palette[3].getRGB();
                 } else if ((newPixel >= 102) && (newPixel < 153)) {
-                    newPixel = this.palette[2].getRGB();
+                    newPixel = palette[2].getRGB();
                 } else if ((newPixel >= 153) && (newPixel < 204)) {
-                    newPixel = this.palette[1].getRGB();
+                    newPixel = palette[1].getRGB();
                 } else {
-                    newPixel = this.palette[0].getRGB();
+                    newPixel = palette[0].getRGB();
                 }
                 this.after.setRGB(x, y, newPixel);
+            }
+        }
+    }
+
+    private void ConvertImageHalfPixel()
+    {
+        after = new BufferedImage(before.getWidth(), before.getHeight(), before.getType());
+        int[] avgLookUpTable = new int[766];
+        for (int i = 0; i < 766; i++) {
+            avgLookUpTable[i] = (i / 3);
+        }
+        for (int x = 0; x < before.getWidth(); x+=2) {
+            for (int y = 0; y < before.getHeight(); y+=2){
+
+                int red = 0, blue = 0, green = 0;
+
+                for (int x2 = 0; x2 < 2; x2 ++) {
+                    for (int y2 = 0; y2 < 2; y2 ++) {
+                        red += new Color(before.getRGB(x + x2, y + y2)).getRed();
+                        green += new Color(before.getRGB(x + x2, y + y2)).getGreen();
+                        blue += new Color(before.getRGB(x + x2, y + y2)).getBlue();
+                    }
+                }
+
+                int newPixel = (red + green + blue) / 4;
+                newPixel = avgLookUpTable[newPixel];
+                if ((newPixel >= 0) && (newPixel < 51)) {
+                    newPixel = palette[4].getRGB();
+                } else if ((newPixel >= 51) && (newPixel < 102)) {
+                    newPixel = palette[3].getRGB();
+                } else if ((newPixel >= 102) && (newPixel < 153)) {
+                    newPixel = palette[2].getRGB();
+                } else if ((newPixel >= 153) && (newPixel < 204)) {
+                    newPixel = palette[1].getRGB();
+                } else {
+                    newPixel = palette[0].getRGB();
+                }
+                this.after.setRGB(x, y, newPixel);
+                this.after.setRGB(x + 1, y, newPixel);
+                this.after.setRGB(x + 1, y + 1, newPixel);
+                this.after.setRGB(x, y + 1, newPixel);
             }
         }
     }
@@ -144,7 +196,7 @@ public class Main
     private void SaveImage()
     {
         int reply = JOptionPane.showConfirmDialog(null, "Would you like to save?", "Save Image?", 0);
-        if (reply == 0)
+        if (reply == JOptionPane.YES_OPTION)
         {
             String userDir = System.getProperty("user.home");
             JFileChooser fc = new JFileChooser(userDir + "/Desktop");
