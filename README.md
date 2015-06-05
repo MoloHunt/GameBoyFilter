@@ -2,7 +2,7 @@
 
 Converts an image to the 5 colour original GameBoy colour palette 
 
-![alt tag](https://raw.githubusercontent.com/MoloHunt/GameBoyFilter/master/Images/Program%20Screenshot.png)
+![alt tag](https://raw.githubusercontent.com/MoloHunt/GameBoyFilter/master/Images/Program%20Screenshot%20v0.3.png)
 
 ##Usage
 
@@ -16,7 +16,7 @@ Converts an image to the 5 colour original GameBoy colour palette
 
 ##To Do
 
-- [ ] Streamline Saving
-- [ ] Add ability to crop image if it doesn't match the scaling
-- [ ] Ability to input custom scale
+- [X] Streamline Saving
+- [X] Add ability to crop image if it doesn't match the scaling
+- [X] Ability to input custom scale
 - [ ] Convert to applet that can be embedded into a web page
