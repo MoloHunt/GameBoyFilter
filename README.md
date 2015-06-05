@@ -2,7 +2,7 @@
 
 Converts an image to the 5 colour original GameBoy colour palette 
 
-![alt tag](https://raw.githubusercontent.com/MoloHunt/GameBoyFilter/master/Images/Program%20Screenshot%20v0.3.png)
+![alt tag](https://raw.githubusercontent.com/MoloHunt/GameBoyFilter/master/Images/Program%20Screenshot%20V0.5.png)
 
 ##Usage
 
