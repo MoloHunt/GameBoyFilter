@@ -2,6 +2,8 @@
 
 Converts an image to the 5 colour original GameBoy colour palette 
 
+![alt tag](https://raw.githubusercontent.com/MoloHunt/GameBoyFilter/master/Images/Program%20Screenshot.png)
+
 ##Usage
 
 - Open the application and it will prompt you to select an image
