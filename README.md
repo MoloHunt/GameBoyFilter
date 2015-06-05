@@ -32,6 +32,6 @@ Converts an image to the 5 colour original GameBoy colour palette
 - [X] Streamline Saving
 - [X] Add ability to crop image if it doesn't match the scaling
 - [X] Ability to input custom scale
-- [ ] Ability to load a fresh image
-- [ ] Upload jar file for people to play around with
+- [X] Ability to load a fresh image
+- [X] Upload jar file for people to play around with
 - [ ] Convert to applet that can be embedded into a web page
