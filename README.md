@@ -1,4 +1,4 @@
-# Game Boy Filter
+# Game Boy Filter V0.6 *BROKEN*
 
 Converts an image to the 5 colour original GameBoy colour palette 
 
