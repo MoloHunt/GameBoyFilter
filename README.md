@@ -34,5 +34,5 @@ Converts an image to the 5 colour original GameBoy colour palette
 - [X] Ability to input custom scale
 - [X] Ability to load a fresh image
 - [X] Upload jar file for people to play around with
-- [ ] Currently low contrast images don't come out well, this needs working on, for some sort of contextual maximum and minimum high and low for the colours to then be determined around that instead of the current system which uses 0 to 51 as the lowest and 204 to 255 as th ehighest for the colours, this doesn't work well when those bands aren't present and the picture becomes a wash of mid tones
+- [ ] Currently low contrast images don't come out well, this needs working on, for some sort of contextual maximum and minimum high and low for the colours to then be determined around that instead of the current system which uses 0 to 51 as the lowest and 204 to 255 as the highest for the colours, this doesn't work well when those bands aren't present and the picture becomes a wash of mid tones
 - [ ] Convert to applet that can be embedded into a web page
